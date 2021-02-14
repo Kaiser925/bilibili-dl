@@ -18,7 +18,7 @@ import (
 	"github.com/spf13/cobra"
 )
 
-var filename string
+var output string
 
 // coverCmd represents the cover command
 var coverCmd = &cobra.Command{
@@ -27,7 +27,7 @@ var coverCmd = &cobra.Command{
 	Long:  "Get cover of video",
 	Args:  cobra.MinimumNArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		return pkg.GetCover(args[0], filename)
+		return pkg.GetCover(args[0], output)
 	},
 }
 
@@ -38,9 +38,9 @@ func init() {
   bilibili-tool cover [flags] <BVNumber>
 
 Flags:
-  -f, --filename string   filename of saved cover, default BV name
+  -f, --output string   output of saved cover, default BV name
   -h, --help              help for cover
 `)
-	coverCmd.Flags().StringVarP(&filename, "filename", "f", "",
-		"filename of saved cover, default BV name")
+	coverCmd.Flags().StringVarP(&output, "output", "o", "",
+		"output of saved cover, default BV name")
 }
