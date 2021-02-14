@@ -13,23 +13,34 @@
 package cmd
 
 import (
-	"fmt"
+	"github.com/Kaiser925/bilibili-tool/pkg"
+
 	"github.com/spf13/cobra"
-	"os"
 )
 
-// rootCmd represents the base command when called without any subcommands
-var rootCmd = &cobra.Command{
-	Use:   "bilibili-tool",
-	Short: "A tool for getting bilibili resource.",
-	Long:  `A tool for getting bilibili resource.`,
+var filename string
+
+// coverCmd represents the cover command
+var coverCmd = &cobra.Command{
+	Use:   "cover",
+	Short: "Get cover of video",
+	Long:  "Get cover of video",
+	Args:  cobra.MinimumNArgs(1),
+	RunE: func(cmd *cobra.Command, args []string) error {
+		return pkg.GetCover(args[0], filename)
+	},
 }
 
-// Execute adds all child commands to the root command and sets flags appropriately.
-// This is called by main.main(). It only needs to happen once to the rootCmd.
-func Execute() {
-	if err := rootCmd.Execute(); err != nil {
-		fmt.Println(err)
-		os.Exit(1)
-	}
+func init() {
+	rootCmd.AddCommand(coverCmd)
+
+	coverCmd.SetUsageTemplate(`Usage:
+  bilibili-tool cover [flags] <BVNumber>
+
+Flags:
+  -f, --filename string   filename of saved cover, default BV name
+  -h, --help              help for cover
+`)
+	coverCmd.Flags().StringVarP(&filename, "filename", "f", "",
+		"filename of saved cover, default BV name")
 }
