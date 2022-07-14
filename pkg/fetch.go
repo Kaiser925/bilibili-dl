@@ -1,6 +1,6 @@
-// Developed by Kaiser925 on 2021/2/14.
-// Lasted modified 2021/2/14.
-// Copyright (c) 2021.  All rights reserved
+// Developed by Kaiser925 on 2022/7/14.
+// Lasted modified 2022/7/14.
+// Copyright (c) 2022.  All rights reserved
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -10,14 +10,15 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-
 package pkg
 
 import (
-	"errors"
 	"fmt"
 	"github.com/Kaiser925/requests4go"
 	"github.com/antchfx/htmlquery"
+	"log"
+	"net/url"
+	"path"
 	"strings"
 )
 
@@ -29,58 +30,43 @@ var headers = requests4go.Headers(map[string]string{
 	"Accept-Encoding": "gzip, deflate, br",
 })
 
-func GetCover(bvNum string, filename string) error {
-	if !isValidName(bvNum) {
-		return errors.New("not valid bv number: " + bvNum)
+func GetCover(u string, filename string) {
+	URL, err := url.Parse(u)
+	if err != nil {
+		log.Fatalf("not valid url: %v\n", err)
 	}
-
+	vid := path.Base(URL.Path)
 	if len(filename) == 0 {
-		filename = fmt.Sprintf("%s.jpg", bvNum)
+		filename = fmt.Sprintf("%s.jpg", vid)
 	}
 
-	return getCover(bvNum, filename)
-}
-
-func getCover(bvNum string, filename string) error {
-	image, err := getCoverSrc(bvNum)
+	log.Println("get image src of", u)
+	resp, err := requests4go.Get(u, headers)
 	if err != nil {
-		return err
+		log.Fatalf("coudn't send request to %s: %v", u, err)
 	}
-
-	resp, err := requests4go.Get(image, headers)
-	if err != nil {
-		return err
-	}
-
-	if err := resp.SaveContent(filename); err != nil {
-		return err
-	}
-
-	return nil
-}
-
-func getCoverSrc(bvNum string) (string, error) {
-	url := fmt.Sprintf("https://www.bilibili.com/video/%s/", bvNum)
-	resp, err := requests4go.Get(url, headers)
-	if err != nil {
-		return "", err
-	}
-
 	if !resp.Ok() {
-		return "", errors.New("get video page failed: " + resp.Status)
+		log.Fatalf("coudn't load response: got status %s\n", resp.Status)
 	}
 	txt, err := resp.Text()
 	if err != nil {
-		return "", err
+		log.Fatalf("coudn't load response content: %v\n", err)
 	}
 	doc, err := htmlquery.Parse(strings.NewReader(txt))
 	if err != nil {
-		return "", err
+		log.Fatalf("coudn't parse response html: %v\n", err)
 	}
 	meta := htmlquery.FindOne(doc, "//meta[@itemprop='image']")
-	return htmlquery.SelectAttr(meta, "content"), nil
-}
+	imgSrc := htmlquery.SelectAttr(meta, "content")
 
-func isValidName(bvNum string) bool {
-	return strings.HasPrefix(bvNum, "BV") || strings.HasPrefix(bvNum, "bv")
+	log.Println("downloading image")
+	resp, err = requests4go.Get(imgSrc, headers)
+	if err != nil {
+		log.Fatalf("coudn't send request to %s: %v\n", u, err)
+	}
+
+	if err := resp.SaveContent(filename); err != nil {
+		log.Fatalf("coudn't save image file: %v\n", err)
+	}
+	log.Printf("cover of %s saved\n", u)
 }

@@ -13,8 +13,7 @@
 package cmd
 
 import (
-	"github.com/Kaiser925/bilibili-tool/pkg"
-
+	bilibili_dl "github.com/Kaiser925/bilibili-dl/pkg"
 	"github.com/spf13/cobra"
 )
 
@@ -22,25 +21,17 @@ var output string
 
 // coverCmd represents the cover command
 var coverCmd = &cobra.Command{
-	Use:   "cover",
+	Use:   "cover <url>",
 	Short: "Get cover of video",
 	Long:  "Get cover of video",
 	Args:  cobra.MinimumNArgs(1),
-	RunE: func(cmd *cobra.Command, args []string) error {
-		return pkg.GetCover(args[0], output)
+	Run: func(cmd *cobra.Command, args []string) {
+		bilibili_dl.GetCover(args[0], output)
 	},
 }
 
 func init() {
 	rootCmd.AddCommand(coverCmd)
-
-	coverCmd.SetUsageTemplate(`Usage:
-  bilibili-tool cover [flags] <BVNumber>
-
-Flags:
-  -f, --output string   output of saved cover, default BV name
-  -h, --help              help for cover
-`)
 	coverCmd.Flags().StringVarP(&output, "output", "o", "",
 		"output of saved cover, default BV name")
 }

@@ -13,8 +13,6 @@ cloud.google.com/go/storage v1.0.0/go.mod h1:IhtSnM/ZTZV8YYJWCY8RULGVqBDmpoyjwiy
 dmitri.shuralyov.com/gpu/mtl v0.0.0-20190408044501-666a987793e9/go.mod h1:H6x//7gZCb22OMCxBHrMx7a5I7Hp++hsVxbQ4BYO7hU=
 github.com/BurntSushi/toml v0.3.1/go.mod h1:xHWCNGjB5oqiDr8zfno3MHue2Ht5sIBksp03qcyfWMU=
 github.com/BurntSushi/xgb v0.0.0-20160522181843-27f122750802/go.mod h1:IVnqGOEym/WlBOVXweHU+Q+/VP0lqqI8lqeDx9IjBqo=
-github.com/Kaiser925/bilibili-tool v0.0.0-20210214071119-57c6483b0c66 h1:UJeRIm39531buEi299yctx557DS/Sbsd9spEvJ9YV9k=
-github.com/Kaiser925/bilibili-tool v0.0.0-20210214071119-57c6483b0c66/go.mod h1:7x06He2Qwrd+0HHMLv7A5zkiH+jWb25xVmyr/JItP1Y=
 github.com/Kaiser925/requests4go v0.2.1 h1:SgVEwUgQcSCpEOBeJTPvdtzUtfHGyQdsY56fqJ1iKvs=
 github.com/Kaiser925/requests4go v0.2.1/go.mod h1:EbVQy/H214/+bsSHC7939wZgkf6bbNLChJiI0htL4EY=
 github.com/OneOfOne/xxhash v1.2.2/go.mod h1:HSdplMjZKSmBqAxg5vPj2TmRDmfkzw+cTzAElWljhcU=
