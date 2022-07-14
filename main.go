@@ -12,7 +12,7 @@
 // limitations under the License.
 package main
 
-import "github.com/Kaiser925/bilibili-tool/cmd"
+import "github.com/Kaiser925/bilibili-dl/cmd"
 
 func main() {
 	cmd.Execute()

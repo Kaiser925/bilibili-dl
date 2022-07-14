@@ -1,14 +1,15 @@
-# bilibili-tool
+# bilibili-dl
+
 A cli tool for get bilibili resource.
 
-## Usage
+## Install
 
 ```shell
-go get -u github.com/Kaiser925/bilibili-tool
+go install github.com/Kaiser926/bilibili-dl@latest
 ```
 
-#### Download Cover
+#### Download video cover
 
 ```shell
-bilibili-tool cover BV1k7411G7fn -o test.jpg
+$ bilibili-dl cover https://www.bilibili.com/video/<video-id> -o test.jpg
 ```
