@@ -1,6 +1,6 @@
-// Developed by Kaiser925 on 2022/7/14.
-// Lasted modified 2022/7/14.
-// Copyright (c) 2022.  All rights reserved
+// Developed by Kaiser925 on 2023/5/24.
+// Lasted modified 2023/5/24.
+// Copyright (c) 2023.  All rights reserved
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
@@ -12,7 +12,7 @@
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
 // See the License for the specific language governing permissions and
 // limitations under the License.
-package pkg
+package fetch
 
 import (
 	"fmt"
@@ -32,7 +32,8 @@ var headers = requests4go.Headers(map[string]string{
 	"Accept-Encoding": "gzip, deflate, br",
 })
 
-func GetCover(u string, filename string) {
+// FetchCover fetches the cover of given video.
+func FetchCover(u string, filename string) {
 	URL, err := url.Parse(u)
 	if err != nil {
 		log.Fatalf("not valid url: %v\n", err)
@@ -72,5 +73,6 @@ func GetCover(u string, filename string) {
 	if err := resp.SaveContent(filename); err != nil {
 		log.Fatalf("coudn't save image file: %v\n", err)
 	}
+
 	log.Printf("cover of %s saved\n", u)
 }

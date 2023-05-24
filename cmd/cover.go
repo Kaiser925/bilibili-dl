@@ -4,7 +4,9 @@
 // Licensed under the Apache License, Version 2.0 (the "License");
 // you may not use this file except in compliance with the License.
 // You may obtain a copy of the License at
-//     http://www.apache.org/licenses/LICENSE-2.0
+//
+//	http://www.apache.org/licenses/LICENSE-2.0
+//
 // Unless required by applicable law or agreed to in writing, software
 // distributed under the License is distributed on an "AS IS" BASIS,
 // WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
@@ -13,7 +15,7 @@
 package cmd
 
 import (
-	bilibili_dl "github.com/Kaiser925/bilibili-dl/pkg"
+	"github.com/Kaiser925/bilibili-dl/pkg/fetch"
 	"github.com/spf13/cobra"
 )
 
@@ -26,7 +28,7 @@ var coverCmd = &cobra.Command{
 	Long:  "Get cover of video",
 	Args:  cobra.MinimumNArgs(1),
 	Run: func(cmd *cobra.Command, args []string) {
-		bilibili_dl.GetCover(args[0], output)
+		fetch.FetchCover(args[0], output)
 	},
 }
 
